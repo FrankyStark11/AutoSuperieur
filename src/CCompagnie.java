@@ -26,15 +26,16 @@ public class CCompagnie {
 		return LstLimousineTemp;
 	}
 	
-	public List<CChauffeur> GetLstChauffeur(){
+	//retourne la liste des chauffeur sous forme de Array
+	public CChauffeur[] GetLstChauffeur(){
 		
-		List<CChauffeur> LstTemp = new ArrayList<CChauffeur>();
+		CChauffeur[] TabChauffeur = new CChauffeur[mLstChauffeur.size()];
 		
-		for(CChauffeur C : mLstChauffeur){
-			LstTemp.add(C);
+		for(int i = 0;i<mLstChauffeur.size();i++){
+			TabChauffeur[i] = mLstChauffeur.get(i);
 		}
 		
-		return LstTemp;
+		return TabChauffeur;
 	}
 	
 	public CChauffeur GetChauffeur(int _indice){

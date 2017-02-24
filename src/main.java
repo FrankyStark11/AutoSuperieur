@@ -9,7 +9,7 @@ public class main {
 		CCompagnie CO = new CCompagnie();
 		
 		CChauffeur Chauffeur1 = new CChauffeur("Francis","Marsolais","725 Duhamel","2017");
-		CLimousine Limousine1 = new CLimousine("Y22 ESN", "Noir", 8, 60);
+		CLimousine Limousine1 = new CLimousine("Y22 ESN", "Noir", 8, 60, 120000);
 		CTrajet Trajet1 = new CTrajet("Mascouche", "Terrebonne", 12000, 12030, Limousine1);
 		CReservation Reservation1 = new CReservation(Chauffeur1, Trajet1, Limousine1);
 		
@@ -87,6 +87,7 @@ public class main {
 					String couleur = "";
 					int nbPassager = 0;
 					int reservoir = 0;
+					int kilometrageAct = 0;
 					
 					System.out.println("-------------------------");
 					
@@ -110,8 +111,13 @@ public class main {
 					entre = in.readLine();
 					reservoir = Integer.parseInt(entre);
 					
+					//demande et enregistre le kilometrage
+					System.out.print("Kilometrage Actuel : ");
+					entre = in.readLine();
+					kilometrageAct = Integer.parseInt(entre);
+					
 					//creation de la limousine
-					CLimousine NLimousine = new CLimousine(matriculation,couleur,nbPassager,reservoir);
+					CLimousine NLimousine = new CLimousine(matriculation,couleur,nbPassager,reservoir,kilometrageAct);
 					//demande de confirmation et enregistrement
 					System.out.print("La limousine " + NLimousine.ToString() + " va etre ajouter! voulez-vous poursuivre?Y/N :");
 					String reponse = in.readLine();
@@ -125,6 +131,49 @@ public class main {
 			}
 			else if(Integer.parseInt(entre) == 2){ //faire une reservation
 				
+				//variables
+				String villeDepart = "";
+				String villeDestination = "";
+				int distance = 0;
+				int passager = 0;
+				CLimousine limousine = null;
+				
+				//creation d'un nouveau trajet
+				System.out.println("Réservation d'une limousine");
+				System.out.println("***************************");
+				
+				System.out.println("Ville de départ :");
+				System.out.print("-> ");
+				villeDepart = in.readLine();
+				
+				System.out.println("Ville de destination :");
+				System.out.print("-> ");
+				villeDestination = in.readLine();
+				
+				System.out.println("Distance à parcourir :");
+				System.out.print("-> ");
+				distance = Integer.parseInt(in.readLine());
+				
+				System.out.println("Nombre de passager :");
+				System.out.print("-> ");
+				passager = Integer.parseInt(in.readLine());
+				
+				limousine = CO.GetLimousineRandomFromNbPassager(passager);
+				
+				int kiloDebut = limousine.GetKilometrageAct();
+				int kiloFin = kiloDebut + distance;
+				
+				//création du trajet
+				CTrajet NTrajet = new CTrajet(villeDepart,villeDestination,kiloDebut, kiloFin, limousine);
+				
+				//creation de la reservation
+				CReservation NReservation = new CReservation(CO.GetChauffeurRandom(), NTrajet, limousine);
+				
+				CO.AddReservation(NReservation);
+				System.out.println("Votre reservation est confirmé !");
+				System.out.println(NReservation.toString());
+				
+				
 			}
 			//---------------------------------------------------------------------------- OPTION 3 -------------
 			else if(Integer.parseInt(entre) == 3){ //afficher les chauffeurs
@@ -133,8 +182,13 @@ public class main {
 				for(CChauffeur CC : CO.GetAllChauffeur()){
 					System.out.println(i++ + ": " + CC.AfficherInformationChauffeur());
 					CLimousine[] tbl =  CO.GetLimousinesSelonChauffeur(CC);
-					for(CLimousine LL : tbl){
-						System.out.println("     -" + LL.ToString());
+					if(tbl.length>0){
+						for(CLimousine LL : tbl){
+							System.out.println("     -" + LL.ToString());
+						}
+					}
+					else{
+						System.out.println("     Aucune limousine.");
 					}
 				}
 			}

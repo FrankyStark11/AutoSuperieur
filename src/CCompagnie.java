@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.*;
 public class CCompagnie {
 	
 	//---------------------------- DONNÉES MEMBRES -------------------------------------------
@@ -24,18 +25,26 @@ public class CCompagnie {
 	//GET RETOURNE UN ARRAY CONTENANT LES LIMOUSINES POUR LE CHAUFFEUR EN PARAM
 	public CLimousine[] GetLimousinesSelonChauffeur(CChauffeur _chauffeur){
 		
-		CLimousine[] TabLimousine = new CLimousine[mLstLimousine.size()];
+		List<CLimousine> LstLimousine = new ArrayList<CLimousine>();
 		int i = 0;
 		
 		if( mLstLimousine.size() > 0 && mLstChauffeur.size() > 0){ //si il y a chauffeur et limousine faire ...
 			for(CReservation R : mLstReservation){ //parcourt toutes les réservations
 				if(R.GetChauffeur().equals(_chauffeur)){ //si le chauffeur demandé apparait dans la reservation
-					TabLimousine[i++] = R.GetLimousine(); //ajouter la limousine au array
+					boolean present = false;
+					for(int j = 0 ; j < LstLimousine.size()-1 ; j++){
+						if(LstLimousine.get(j).equals(R.GetLimousine())){
+							present = true;
+						}
+					}
+					if(!present){ //si la limousine est absente on peut lajouter
+						LstLimousine.add(R.GetLimousine()); //ajouter la limousine au array
+					}
 				}
 			}
 		}
-		
-		return TabLimousine; // retourne le array
+		CLimousine[] TabLimousine = new CLimousine[LstLimousine.size()];
+		return LstLimousine.toArray(TabLimousine); // retourne le array
 	}
 	
 	//GET RETOURNE UN ARRAY CONTENANT LES CHAUFFEURS
@@ -86,6 +95,35 @@ public class CCompagnie {
 	}
 	
 	//-------------------------------------- METHODES -------------------------------------------------
+	
+	public CLimousine GetLimousineRandomFromNbPassager(int _passager){
+		
+		boolean limousineNonTrouve = true;
+		int i = 0;
+		CLimousine limousine = null;
+		
+		while(limousineNonTrouve){
+			
+			Random randomno = new Random();
+			i = randomno.nextInt(mLstLimousine.size());
+			
+			if(mLstLimousine.get(i).GetNombrePassager() > _passager){
+				limousineNonTrouve = !limousineNonTrouve;
+				limousine = mLstLimousine.get(i);
+			}
+		}
+		return limousine;
+	}
+	
+	//retourne un chauffeur aleatoire de la liste des chauffeurs
+	public CChauffeur GetChauffeurRandom(){
+		
+		int i = 0;
+		Random randomno = new Random();
+		i = randomno.nextInt(mLstChauffeur.size());
+		return mLstChauffeur.get(i);
+		
+	}
 	
 	//RETOURNE UN STRING AVEC L'INFORMATION DE LA COMPAGNIE
  	public String ToString(){

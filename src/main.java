@@ -24,6 +24,7 @@ public class main {
 			System.out.println("1: Ajouter des chauffeurs ou limousines.");
 			System.out.println("2: Faire une reservation.");
 			System.out.println("3: Consulter les chauffeurs.");
+			System.out.println("4: Consulter les trajets.");
 			
 			System.out.print("Choix : ->");
 			String entre = in.readLine();
@@ -33,7 +34,6 @@ public class main {
 				System.out.println("Que desirez vous ajouter ?");
 				System.out.println("1: Un chauffeur");
 				System.out.println("2: Une limousine");
-				System.out.println("3: Annuler");
 				
 				System.out.print("Choix : ->");
 				entre = in.readLine();
@@ -169,10 +169,23 @@ public class main {
 				//creation de la reservation
 				CReservation NReservation = new CReservation(CO.GetChauffeurRandom(), NTrajet, limousine);
 				
-				CO.AddReservation(NReservation);
-				System.out.println("Votre reservation est confirmé !");
-				System.out.println(NReservation.toString());
 				
+				//demande de confirmation et enregistrement
+				System.out.print("La réservation " + NReservation.toString() + " va être effectué! voulez-vous poursuivre?Y/N :");
+				String reponse = in.readLine();
+				if( reponse.toUpperCase().equals("Y")){
+					CO.AddReservation(NReservation);
+					
+					NReservation.GetLimousine().AjouterKilometrage(distance); //ajoute la distance parcourue 
+					
+					System.out.println("*************************************");
+					System.out.println("*!!Votre reservation est confirmé !!*");
+					System.out.println("*************************************");
+				}
+				
+				
+				System.out.print("Appuyer sur entrer ...");
+				in.readLine();
 				
 			}
 			//---------------------------------------------------------------------------- OPTION 3 -------------
@@ -191,6 +204,17 @@ public class main {
 						System.out.println("     Aucune limousine.");
 					}
 				}
+				System.out.print("Appuyer sur entrer ...");
+				in.readLine();
+			}
+			//---------------------------------------------------------------------------------- option 4 ----------
+			else if(Integer.parseInt(entre) == 4){
+				System.out.println("Voici la liste des trajets :");
+				for(CTrajet TT : CO.GetAllTrajets()){
+					System.out.println("-" + TT.ToString());
+				}
+				System.out.print("Appuyer sur entrer ...");
+				in.readLine();
 			}
 			else{
 				System.out.println("Choix non valide");

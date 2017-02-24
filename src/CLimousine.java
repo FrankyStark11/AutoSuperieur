@@ -29,6 +29,11 @@ public class CLimousine {
 	
 	//Affiche les informations de l'instance CLimousine
 	public String ToString(){
-		return "Limousine #" + mMatriculation + " " + mCouleur + " " + mNbPassager + " Passager(s) " + mCapaciteReservoir + "L " + mKilometrage +  "KM";
+		return "#" + mMatriculation + " " + mCouleur + " " + mNbPassager + " Passager(s) " + mCapaciteReservoir + "L " + mKilometrage +  "KM";
+	}
+	
+	//---------------------------------- methodes --------------------------------
+	public void AjouterKilometrage(int _Km){
+		mKilometrage += _Km;
 	}
 }

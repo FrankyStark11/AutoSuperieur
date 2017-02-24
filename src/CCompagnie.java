@@ -77,6 +77,16 @@ public class CCompagnie {
 		return ChauffeurTemp;
 	}
 	
+	public CTrajet[] GetAllTrajets(){
+		CTrajet[] TabTrajet = new CTrajet[mLstReservation.size()];
+		int i = 0;
+		
+		for( i = 0 ; i < mLstReservation.size() ; i++){
+			TabTrajet[i] = mLstReservation.get(i).GetTrajet();
+		}
+		
+		return TabTrajet;
+	}
 	//-------------------------------- ADD -----------------------------------------------------------
 	
 	//ADD AJOUTE UNE LIMOUSINE RECUS EN PARAMETRE

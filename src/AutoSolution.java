@@ -65,7 +65,7 @@ public class AutoSolution {
 		btnDireBonjour.setBounds(0, 238, 434, 23);
 		btnDireBonjour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				List<CChauffeur> LstChauffeur = CO.GetLstChauffeur();
+				CChauffeur[] LstChauffeur = CO.GetAllChauffeur();
 				
 				//
 				for(CChauffeur cc : LstChauffeur){

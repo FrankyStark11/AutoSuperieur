@@ -18,6 +18,6 @@ public class CLimousine {
 	
 	//Affiche les informations de l'instance CLimousine
 	public String ToString(){
-		return "Limousine #imatriculation: " + mMatriculation + " de couleur " + mCouleur + " pouvant accueillir " + mNbPassager + " Passager(s) \n taille du réservoir :" + mCapaciteReservoir + "L.";
+		return "Limousine #" + mMatriculation + " " + mCouleur + " " + mNbPassager + " Passager(s) " + mCapaciteReservoir + "L.";
 	}
 }

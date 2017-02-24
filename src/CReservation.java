@@ -16,9 +16,11 @@ public class CReservation {
 	public CChauffeur GetChauffeur(){
 		return mChauffeur;
 	}
+	
 	public CTrajet GetTrajet(){
 		return mTrajet;
 	}
+	
 	public CLimousine GetLimousine(){
 		return mLimousine;
 	}

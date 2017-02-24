@@ -7,15 +7,15 @@ public class main {
 	public static void main(String args[]) throws Exception {
 		
 		CCompagnie CO = new CCompagnie();
+		
 		CChauffeur Chauffeur1 = new CChauffeur("Francis","Marsolais","725 Duhamel","2017");
-		CChauffeur Chauffeur2 = new CChauffeur("Samuel","Marsolais","725 Duhamel","2013");
-		CChauffeur Chauffeur3 = new CChauffeur("Noemie","Marsolais","725 Duhamel","2015");
 		CLimousine Limousine1 = new CLimousine("Y22 ESN", "Noir", 8, 60);
+		CTrajet Trajet1 = new CTrajet("Mascouche", "Terrebonne", 12000, 12030, Limousine1);
+		CReservation Reservation1 = new CReservation(Chauffeur1, Trajet1, Limousine1);
 		
 		CO.AddChauffeur(Chauffeur1);
-		CO.AddChauffeur(Chauffeur2);
-		CO.AddChauffeur(Chauffeur3);
 		CO.AddLimousine(Limousine1);
+		CO.AddReservation(Reservation1);
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		
@@ -81,16 +81,61 @@ public class main {
 						System.out.println("********************************");
 					}
 				}
-				
+				else if(Integer.parseInt(entre) == 2){ //ajout d'une limousine
+					//initialisation des valeurs 
+					String matriculation = "";
+					String couleur = "";
+					int nbPassager = 0;
+					int reservoir = 0;
+					
+					System.out.println("-------------------------");
+					
+					//demande et enregistre les matriculations
+					System.out.print("Matriculation : ");
+					entre = in.readLine();
+					matriculation = entre;
+					
+					//demande et enregistre les matriculations
+					System.out.print("Couleur : ");
+					entre = in.readLine();
+					couleur = entre;
+					
+					//demande et enregistre les matriculations
+					System.out.print("Nombre de passager : ");
+					entre = in.readLine();
+					nbPassager = Integer.parseInt(entre);
+					
+					//demande et enregistre les matriculations
+					System.out.print("Capacité réservoir : ");
+					entre = in.readLine();
+					reservoir = Integer.parseInt(entre);
+					
+					//creation de la limousine
+					CLimousine NLimousine = new CLimousine(matriculation,couleur,nbPassager,reservoir);
+					//demande de confirmation et enregistrement
+					System.out.print("La limousine " + NLimousine.ToString() + " va etre ajouter! voulez-vous poursuivre?Y/N :");
+					String reponse = in.readLine();
+					if( reponse.toUpperCase().equals("Y")){
+						CO.AddLimousine(NLimousine);
+						System.out.println("**********************************");
+						System.out.println("*!! Nouvelle limousine ajoutée !!*");
+						System.out.println("**********************************");
+					}
+				}
 			}
 			else if(Integer.parseInt(entre) == 2){ //faire une reservation
 				
 			}
+			//---------------------------------------------------------------------------- OPTION 3 -------------
 			else if(Integer.parseInt(entre) == 3){ //afficher les chauffeurs
 				System.out.println("Voici la liste des chauffeurs :");
 				int i = 0;
-				for(CChauffeur CC : CO.GetLstChauffeur()){
+				for(CChauffeur CC : CO.GetAllChauffeur()){
 					System.out.println(i++ + ": " + CC.AfficherInformationChauffeur());
+					CLimousine[] tbl =  CO.GetLimousinesSelonChauffeur(CC);
+					for(CLimousine LL : tbl){
+						System.out.println("     -" + LL.ToString());
+					}
 				}
 			}
 			else{

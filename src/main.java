@@ -10,12 +10,17 @@ public class main {
 		
 		CChauffeur Chauffeur1 = new CChauffeur("Francis","Marsolais","725 Duhamel","2017");
 		CLimousine Limousine1 = new CLimousine("Y22 ESN", "Noir", 8, 60, 120000);
-		CTrajet Trajet1 = new CTrajet("Mascouche", "Terrebonne", 12000, 12030, Limousine1);
-		CReservation Reservation1 = new CReservation(Chauffeur1, Trajet1, Limousine1);
+		
+		//test du try cath sur la class exception dun trajet trop long
+		try{
+			CTrajet Trajet1 = new CTrajet("Mascouche", "Terrebonne", 12000, 12230, Limousine1);
+		}catch(TrajetTooLongException e){
+			e.getMessage();
+		}
+		
 		
 		CO.AddChauffeur(Chauffeur1);
 		CO.AddLimousine(Limousine1);
-		CO.AddReservation(Reservation1);
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		

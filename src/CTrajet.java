@@ -9,13 +9,20 @@ public class CTrajet {
 	private CLimousine mLimousine;
 	
 	//Constructor class CTrajet
-	public CTrajet(String _villeDebut, String _villeFin, int _kiloDebut, int _kiloFin, CLimousine _limousine){
+	public CTrajet(String _villeDebut, String _villeFin, int _kiloDebut, int _kiloFin, CLimousine _limousine) throws TrajetTooLongException{
+		if((_kiloFin - _kiloDebut) < 200){
 		
-		mVilleDebut = _villeDebut;
-		mVilleFin = _villeFin;
-		mKiloDebut = _kiloDebut;
-		mKiloFin = _kiloFin;
-		mLimousine = _limousine;
+			mVilleDebut = _villeDebut;
+			mVilleFin = _villeFin;
+			mKiloDebut = _kiloDebut;
+			mKiloFin = _kiloFin;
+			mLimousine = _limousine;
+			
+		}
+		else{
+			throw new TrajetTooLongException();
+		}
+		
 		
 	}
 	
